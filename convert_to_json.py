@@ -15,5 +15,5 @@ def convert_txt_to_json(txt_file, json_file):
     print(f"Successfully converted {txt_file} to {json_file}")
 
 # Example usage:
-convert_txt_to_json('C:/Users/joaov/OneDrive/Documents/jogo_do_ou_app/bad_options.txt', 'C:/Users/joaov/OneDrive/Documents/jogo_do_ou_app/bad_options.json')
-convert_txt_to_json('C:/Users/joaov/OneDrive/Documents/jogo_do_ou_app/good_options.txt', 'C:/Users/joaov/OneDrive/Documents/jogo_do_ou_app/good_options.json')
+convert_txt_to_json('bad_options.txt', 'bad_options.json')
+convert_txt_to_json('good_options.txt', 'good_options.json')
