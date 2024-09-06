@@ -11,32 +11,89 @@
         .then(function() { console.log("Service Worker Registered"); });
     }
     </script>    
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
+<style>
+    body {
+        font-family: 'Nunito', sans-serif;
+        background-color: #f0f0f5;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    h1 {
+        color: #4a90e2;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    button {
+        background-color: #4a90e2;
+        color: #fff;
+        border: none;
+        padding: 15px 30px;
+        font-size: 16px;
+        margin: 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #357ABD;
+    }
+
+    .result {
+        margin-top: 20px;
+        font-size: 22px;
+        color: #333;
+    }
+
+    .connector {
+        font-size: 20px;
+        font-weight: bold;
+        margin: 10px;
+        color: #ff6f61;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    @media only screen and (max-width: 600px) {
+        h1 {
+            font-size: 24px;
         }
+
         button {
-            padding: 10px 20px;
-            margin: 10px;
-            font-size: 16px;
+            font-size: 14px;
+            padding: 12px 24px;
         }
+
         .result {
-            margin-top: 20px;
-            font-size: 18px;
+            font-size: 20px;
         }
-    </style>
+    }
+</style>
 </head>
 <body>
-    <h1>Boas e Más Escolhas</h1>
-    <p>Escolha uma opção:</p>
-    <button onclick="showBadOptions()">Más Opções</button>
-    <button onclick="showGoodOptions()">Boas Opções</button>
-    <button onclick="showGoodBadCombo()">Boas + Más Opções</button>
+    <div class="container">
+        <h1>Boas e Más Escolhas</h1>
+        <button onclick="showBadOptions()">Más Opções</button>
+        <button onclick="showGoodOptions()">Boas Opções</button>
+        <button onclick="showGoodBadCombo()">Boas + Más Opções</button>
+        
+        <div class="result" id="result"></div>
+    </div>
     
-    <div class="result" id="result"></div>
-
     <script>
         let goodOptions = [];
         let badOptions = [];
