@@ -3,86 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogo do Ou</title>
+    <title>Boas e Más Escolhas</title>
+
     <link rel="manifest" href="/manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
+
     <script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service-worker.js')
-        .then(function() { console.log("Service Worker Registered"); });
-    }
-    </script>    
-<style>
-    body {
-        font-family: 'Nunito', sans-serif;
-        background-color: #f0f0f5;
-        margin: 0;
-        padding: 0;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+            .then(function() { console.log("Service Worker Registered"); });
+        }
+    </script>
 
-    h1 {
-        color: #4a90e2;
-        font-weight: 700;
-        margin-bottom: 20px;
-    }
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f0f0f5;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-    button {
-        background-color: #4a90e2;
-        color: #fff;
-        border: none;
-        padding: 15px 30px;
-        font-size: 16px;
-        margin: 10px;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-        background-color: #357ABD;
-    }
-
-    .result {
-        margin-top: 20px;
-        font-size: 22px;
-        color: #333;
-    }
-
-    .connector {
-        font-size: 20px;
-        font-weight: bold;
-        margin: 10px;
-        color: #ff6f61;
-    }
-
-    .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-
-    @media only screen and (max-width: 600px) {
         h1 {
-            font-size: 24px;
+            color: #4a90e2;
+            font-weight: 700;
+            margin-bottom: 20px;
         }
 
         button {
-            font-size: 14px;
-            padding: 12px 24px;
+            background-color: #4a90e2;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            margin: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #357ABD;
         }
 
         .result {
-            font-size: 20px;
+            margin-top: 20px;
+            font-size: 22px;
+            color: #333;
         }
-    }
-</style>
+
+        .connector {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px;
+            color: #ff6f61;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        @media only screen and (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 12px 24px;
+            }
+
+            .result {
+                font-size: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -93,7 +97,7 @@
         
         <div class="result" id="result"></div>
     </div>
-    
+
     <script>
         let goodOptions = [];
         let badOptions = [];
