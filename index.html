@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo do Ou</title>
+    <link rel="manifest" href="/manifest.json">
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+        .then(function() { console.log("Service Worker Registered"); });
+    }
+    </script>    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Boas e Más Escolhas</h1>
+    <p>Escolha uma opção:</p>
+    <button onclick="showBadOptions()">Más Opções</button>
+    <button onclick="showGoodOptions()">Boas Opções</button>
+    <button onclick="showGoodBadCombo()">Boas + Más Opções</button>
+    
+    <div class="result" id="result"></div>
+
+    <script>
+        let goodOptions = [];
+        let badOptions = [];
+
+        function loadOptions() {
+            fetch('good_options.json')
+                .then(response => response.json())
+                .then(data => {
+                    goodOptions = data;
+                });
+
+            fetch('bad_options.json')
+                .then(response => response.json())
+                .then(data => {
+                    badOptions = data;
+                });
+        }
+
+        function getRandomFromList(list) {
+            const randomIndex1 = Math.floor(Math.random() * list.length);
+            let randomIndex2 = Math.floor(Math.random() * list.length);
+            while (randomIndex2 === randomIndex1) {
+                randomIndex2 = Math.floor(Math.random() * list.length);
+            }
+            return [list[randomIndex1], list[randomIndex2]];
+        }
+
+        function showBadOptions() {
+            const [x_bad, y_bad] = getRandomFromList(badOptions);
+            document.getElementById('result').innerHTML = `<div>${x_bad}</div><div class="connector">ou</div><div>${y_bad}</div>`;
+        }
+
+        function showGoodOptions() {
+            const [x_good, y_good] = getRandomFromList(goodOptions);
+            document.getElementById('result').innerHTML = `<div>${x_good}</div><div class="connector">ou</div><div>${y_good}</div>`;
+        }
+
+        function showGoodBadCombo() {
+            const x_good = goodOptions[Math.floor(Math.random() * goodOptions.length)];
+            const y_bad = badOptions[Math.floor(Math.random() * badOptions.length)];
+            document.getElementById('result').innerHTML = `<div>${x_good}</div><div class="connector">mas</div><div>${y_bad}</div>`;
+        }
+
+        window.onload = loadOptions;
+    </script>
+</body>
+</html>
