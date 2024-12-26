@@ -90,7 +90,7 @@ if 'responses.csv' not in st.session_state:
     st.session_state['responses.csv'] = pd.DataFrame(columns=['choice', 'alternative1', 'alternative2', 'game_type'])
 
 # Configuração do Streamlit
-st.title("Jogo do 'Você prefere?'")
+st.title("Jogo do Ou")
 
 # Seleção do tipo de jogo
 game_type = st.selectbox("Escolha o tipo de jogo:", ["Boas", "Ruins"]) # Removido "Boas + Ruins"
