@@ -1,43 +1,41 @@
 import streamlit as st
 import google.generativeai as genai
 import pandas as pd
-import os
 
-# Configurações do Gemini
-# A chave de API agora é lida de uma variável de ambiente do Streamlit
-genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+# Configure o modelo do Gemini
+genai.configure(api_key=st.secrets.GEMINI_API_KEY)
 
-# Define o modelo experimental e a temperatura
+# Define o modelo e a temperatura
 generation_config = {
-    "temperature": 0.9,  # Temperatura alta para maior criatividade
+    "temperature": 0.9,
     "top_p": 1,
     "top_k": 1,
     "max_output_tokens": 2048,
 }
 
+# Ajusta as configurações de segurança (opção mais permissiva)
 safety_settings = [
     {
         "category": "HARM_CATEGORY_HARASSMENT",
-        "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+        "threshold": "BLOCK_ONLY_HIGH"
     },
     {
         "category": "HARM_CATEGORY_HATE_SPEECH",
-        "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+        "threshold": "BLOCK_ONLY_HIGH"
     },
     {
         "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-        "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+        "threshold": "BLOCK_ONLY_HIGH"
     },
     {
         "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
-        "threshold": "BLOCK_MEDIUM_AND_ABOVE"
-    }
+        "threshold": "BLOCK_ONLY_HIGH"
+    },
 ]
 
 model = genai.GenerativeModel(model_name="gemini-pro",
-                          generation_config=generation_config,
-                          safety_settings=safety_settings)
-
+                              generation_config=generation_config,
+                              safety_settings=safety_settings)
 
 # Função para gerar alternativas com prompt aprimorado
 def generate_alternatives(game_type):
@@ -73,8 +71,6 @@ A resposta DEVE conter SOMENTE as duas alternativas, cada uma em uma linha separ
 
     return alternatives
 
-
-
 # Função para salvar a resposta (mantém a mesma lógica)
 def save_response(choice, alternative1, alternative2):
     data = {'choice': [choice], 'alternative1': [alternative1], 'alternative2': [alternative2], 'game_type': [st.session_state.game_type]}
@@ -96,7 +92,7 @@ if 'responses.csv' not in st.session_state:
 st.title("Jogo do 'Você prefere?'")
 
 # Seleção do tipo de jogo
-game_type = st.selectbox("Escolha o tipo de jogo:", ["Boas", "Ruins", "Boas + Ruins"])
+game_type = st.selectbox("Escolha o tipo de jogo:", ["Boas", "Ruins"]) # Removido "Boas + Ruins"
 
 # Armazena o tipo de jogo no estado da sessão
 st.session_state.game_type = game_type
@@ -127,20 +123,3 @@ with col2:
 if st.button("Nova escolha"):
     st.session_state['alternatives'] = generate_alternatives(game_type)
     st.experimental_rerun()
-
-# Exibir dataframe (opcional)
-if st.checkbox("Mostrar respostas"):
-    st.dataframe(st.session_state['responses.csv'])
-
-# Download do dataframe
-    @st.cache_data
-    def convert_df(df):
-      return df.to_csv(index=False).encode('utf-8')
-    csv = convert_df(st.session_state['responses.csv'])
-    st.download_button(
-      "Baixar respostas como CSV",
-      csv,
-      "respostas.csv",
-      "text/csv",
-      key='download-csv'
-    )
