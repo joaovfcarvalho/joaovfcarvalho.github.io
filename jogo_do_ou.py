@@ -34,9 +34,10 @@ safety_settings = [
     }
 ]
 
-model = genai.GenerativeModel(model_name="gemini-1.0-pro-001",
-                              generation_config=generation_config,
-                              safety_settings=safety_settings)
+model = genai.GenerativeModel(model_name="gemini-pro",
+                          generation_config=generation_config,
+                          safety_settings=safety_settings)
+
 
 # Função para gerar alternativas com prompt aprimorado
 def generate_alternatives(game_type):
