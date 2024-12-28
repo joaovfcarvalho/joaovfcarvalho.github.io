@@ -7,7 +7,7 @@ genai.configure(api_key=st.secrets.GEMINI_API_KEY)
 
 # Define o modelo e a temperatura
 generation_config = {
-    "temperature": 0.9,
+    "temperature": 1.6,
     "top_p": 1,
     "top_k": 1,
     "max_output_tokens": 2048,
@@ -17,19 +17,19 @@ generation_config = {
 safety_settings = [
     {
         "category": "HARM_CATEGORY_HARASSMENT",
-        "threshold": "BLOCK_ONLY_HIGH"
+        "threshold": "BLOCK_NONE"
     },
     {
         "category": "HARM_CATEGORY_HATE_SPEECH",
-        "threshold": "BLOCK_ONLY_HIGH"
+        "threshold": "BLOCK_NONE"
     },
     {
         "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-        "threshold": "BLOCK_ONLY_HIGH"
+        "threshold": "BLOCK_NONE"
     },
     {
         "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
-        "threshold": "BLOCK_ONLY_HIGH"
+        "threshold": "BLOCK_NONE"
     },
 ]
 
@@ -46,7 +46,7 @@ def generate_alternatives(game_type):
 
     prompt = f"""
 Você é um assistente de um jogo de escolhas chamado 'Você Prefere?'.
-Seu objetivo é gerar duas alternativas únicas, interessantes e dentro do tema proposto.
+Seu objetivo é gerar duas alternativas únicas, interessantes e engraçadas. As alternativas devem ter um nível similar, no sentido que um usuário deveria ter dificuldade para escolher entre elas. 
 
 **Tipo de Jogo:** {game_type}
 
@@ -54,7 +54,7 @@ Seu objetivo é gerar duas alternativas únicas, interessantes e dentro do tema 
 
 A resposta DEVE conter SOMENTE as duas alternativas, cada uma em uma linha separada, SEM numeração ou qualquer outro texto adicional.
 
-**Exemplos de alternativas (leia com atenção para entender o estilo e o tipo de humor):**
+**Exemplos de alternativas (leia com atenção para entender o estilo e o tipo de humor. A ideia não é copiar exatamente as alternativas ou as personalidades que aparecem nos exemplos, mas somente o estilo e tipo de humor):**
 
 {examples}
 
